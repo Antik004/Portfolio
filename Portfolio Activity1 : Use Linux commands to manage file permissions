@@ -1,0 +1,101 @@
+
+Manage authorization
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+File permissions in Linux
+Project description
+You are a security professional at a large organization. You mainly work with their research team. Part of your job is to ensure users on this team are authorized with the appropriate permissions. This helps keep the system secure. 
+
+Your task is to examine existing permissions on the file system. You’ll need to determine if the permissions match the authorization that should be given. If they do not match, you’ll need to modify the permissions to authorize the appropriate users and remove any unauthorized access.
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Current file permissions
+This document displays the file structure of the /home/researcher2/projects directory and the permissions of the files and subdirectory it contains.
+
+In the /home/researcher2/projects directory, there are five files with the following names and permissions: 
+●	project_k.txt
+○	User = read, write, 
+○	Group = read, write
+○	Other = read, write
+●	project_m.txt
+○	User = read, write
+○	Group = read
+○	Other = none
+●	project_r.txt
+○	User= read, write
+○	Group = read, write
+○	Other = read
+●	project_t.txt
+○	User = read, write
+○	Group = read, write
+○	Other = read
+●	.project_x.txt
+○	User = read, write
+○	Group = write
+○	Other = none
+
+There is also one subdirectory inside the projects directory named drafts. The permissions on drafts are:
+●	User = read, write, execute
+●	Group = execute
+●	Other = none
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+INSTRUCTIONS :-                                                                                                                                                                                                                                                             /
+The research team has archived .project_x.txt, which is why it’s a hidden file. This file should not have write permissions for anyone, but the user and group should be able to read the file. Use a Linux command to assign .project_x.txt the appropriate authorization. /
+                                                                                                                                                                                                                                                                            /
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+drwx--x--- 2 researcher2 research_team 4096 Aug  2 13:10 drafts
+-rw-rw-rw- 1 researcher2 research_team   46 Aug  2 13:10 project_k.txt
+-rw-r----- 1 researcher2 research_team   46 Aug  2 13:10 project_m.txt
+-rw-rw-r-- 1 researcher2 research_team   46 Aug  2 13:10 project_r.txt
+-rw-rw-r-- 1 researcher2 research_team   46 Aug  2 13:10 project_t.txt
+researcher2@3376c9128b4e:~/projects$  
+
+// HERE WE CAN SEE THE DIFFERENT PERMISSIONS ASSIGNED TO DIFFERENT FILES.
+
+FIRST WE HAVE TO UNDERSTAND THE 10 CHARACTER LENGTH PERMISSIONS STRING  I.E DRWXRWXRWX
+>> D :STANDS FOR DIRECTORY
+>> R:- READ W:-WRITE X:- EXECUTE 
+>> 1ST RWX IS FOR USER
+    2ND RWX IS FOR GROUP 
+    3RD RWX IS FOR OTHERS.
+TO EDIT OR MODIFY THE PERMISSIONS WE USE THE CHMOD COMMAND FOLLOWED BY VARIOUS ARGUMENTS
+HERE U:- USERS
+      G:- GROUPS
+      O:- OTHERS
+    WE USE THE ARITHMATIC OPERATOR '+' TO ADD PERMISSIONS 
+      AND THE '-' OPERATOR TO REMOVE PERMISSIONS
+
+AS PER THE INSTRUCTIONS PROVIDED, I WILL FOLLOW SOME SEQUENCE OF STEPS:-
+
+STEP 1:- TO REVEAL THE HIDDEN FILE AS WELL AS VIEW ITS PERMISSIONS WE WILL USE THE COMMAND         ls-la
+>> 
+drwxr-xr-x 3 researcher2 research_team 4096 Aug  2 13:10 .
+drwxr-xr-x 3 researcher2 research_team 4096 Aug  2 13:26 ..
+-rw--w---- 1 researcher2 research_team   46 Aug  2 13:10 .project_x.txt
+drwx--x--- 2 researcher2 research_team 4096 Aug  2 13:10 drafts
+-rw-rw-rw- 1 researcher2 research_team   46 Aug  2 13:10 project_k.txt
+-rw-r----- 1 researcher2 research_team   46 Aug  2 13:10 project_m.txt
+-rw-rw-r-- 1 researcher2 research_team   46 Aug  2 13:10 project_r.txt
+-rw-rw-r-- 1 researcher2 research_team   46 Aug  2 13:10 project_t.txt
+researcher2@3376c9128b4e:~/projects$ 
+ >> 
+      //here we can see the hidden file i.e .project_x.txt gets revealed and it currently has the following permissions:-  USER:- READ AND WRITE
+                                                                                                                          GROUP :- WRITE
+                                                                                                                          OTHERS:- NONE
+STEP 2:- chmod u-w,g-w,g+r .project_x.txt     // WHEN WE EXECUTE THIS COMMAND, THE FILE DOES NOT GIVE WRITE PERMISSIONS TO ANYONE BUT USER AND GROUP ARE AVAILABLE TO READ THE FILE. 
+                                              // WE CAN USE THE ',' SEPERATOR TO ADDRESS DIFFERENT ENTITIES AT ONCE.
+>>
+drwxr-xr-x 3 researcher2 research_team 4096 Aug  2 13:10 .
+drwxr-xr-x 3 researcher2 research_team 4096 Aug  2 13:26 ..
+-r--r----- 1 researcher2 research_team   46 Aug  2 13:10 .project_x.txt
+drwx--x--- 2 researcher2 research_team 4096 Aug  2 13:10 drafts
+-rw-rw-rw- 1 researcher2 research_team   46 Aug  2 13:10 project_k.txt
+-rw-r----- 1 researcher2 research_team   46 Aug  2 13:10 project_m.txt
+-rw-rw-r-- 1 researcher2 research_team   46 Aug  2 13:10 project_r.txt
+-rw-rw-r-- 1 researcher2 research_team   46 Aug  2 13:10 project_t.txt
+>>
+//HERE WE CAN SEE OUR JOB IS DONE!!
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
